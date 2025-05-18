@@ -1,4 +1,5 @@
 import userModel from "../../models/user";
+import banUserModel from "../../models/banPhone";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import registerValidator from "../../validators/register.validator";
@@ -21,7 +22,14 @@ export const register = async (req: Request, res: Response) => {
         message: "Username or email already exists",
       });
     }
-
+    const isUserBan = await banUserModel.findOne({
+      phone: phone,
+    });
+    if (isUserBan) {
+      return res.status(409).json({
+        message: "your phone number is ban",
+      });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const countOfUsers = await userModel.countDocuments();
 
