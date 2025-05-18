@@ -1,2 +1,16 @@
 import express from "express";
-export const app = express();
+import authRouter from "./routes/v1/auth.route";
+import cors from "cors";
+import path from "path";
+import bodyParser from "body-parser";
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+
+app.use(
+  "/courses/covers",
+  express.static(path.join(__dirname, "public", "courses", "covers"))
+);
+app.use("/v1/auth", authRouter);
+export default app;
