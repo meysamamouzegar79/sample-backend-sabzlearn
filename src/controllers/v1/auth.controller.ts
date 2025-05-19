@@ -56,3 +56,33 @@ export const register = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const login = async (req: Request, res: Response) => {
+  const { identifier, password } = req.body;
+
+  const user = await userModel.findOne({
+    $or: [
+      {
+        email: identifier,
+      },
+      {
+        username: identifier,
+      },
+    ],
+  });
+  if (!user) {
+    return res.status(401).json({
+      message: "There is no user with this email or username",
+    });
+  }
+  const isValidPassword = await bcrypt.compare(password, user.password);
+  if (!isValidPassword) {
+    return res.status(401).json({ message: "your password is not valid" });
+  }
+
+  const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "30 day",
+  });
+
+  return res.status(200).json({ accessToken });
+};
