@@ -2,8 +2,8 @@ import userModel from "../models/user";
 import jwt from "jsonwebtoken";
 
 export = async (req, res, next) => {
-  const authHeader = req.header("Authorization").split(" ");
-  if (authHeader.length !== 1) {
+  const authHeader = req?.header("Authorization")?.split(" ");
+  if (authHeader?.length !== 1) {
     return res.status(401).json({
       message: "this route is protected and should be login",
     });
