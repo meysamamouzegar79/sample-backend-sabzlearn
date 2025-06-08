@@ -19,7 +19,6 @@ router
   .put(authMiddlewares, isAdminMiddleware, (req, res) => {
     accept(req, res)
   });
-
 router
   .route("/:id/reject")
   .put(authMiddlewares, isAdminMiddleware, (req, res) => {
