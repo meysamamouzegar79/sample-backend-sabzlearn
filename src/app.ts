@@ -7,6 +7,7 @@ import commentsRouter from './routes/v1/comments.route'
 import contactRouter from './routes/v1/contact.route'
 import newsLetterRouter from './routes/v1/newsletter.route'
 import searchRouter from './routes/v1/search.route'
+import notificationRouter from './routes/v1/notification.route'
 import cors from "cors";
 import path from "path";
 import bodyParser from "body-parser";
@@ -30,5 +31,6 @@ app.use("/v1/comments", commentsRouter);
 app.use("/v1/contacts", contactRouter);
 app.use("/v1/newsLetter", newsLetterRouter);
 app.use("/v1/search", searchRouter);
+app.use("/v1/notification", notificationRouter);
 
 export default app;
